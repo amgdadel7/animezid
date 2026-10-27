@@ -1,0 +1,204 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: "Tajawal", "Cairo", ui-sans-serif, sans-serif;
+  --font-body: "Cairo", "Tajawal", ui-sans-serif, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  --color-ink-950: #07080d;
+  --color-ink-900: #0b0d15;
+  --color-ink-850: #10131d;
+  --color-ink-800: #151926;
+  --color-ink-700: #1d2233;
+  --color-ink-600: #2a3045;
+  --color-ink-500: #3b4260;
+
+  --color-mist-400: #7d86a3;
+  --color-mist-300: #9aa3bd;
+  --color-mist-200: #c3c9db;
+  --color-mist-100: #e8ebf4;
+
+  --color-amber-glow: #f7b733;
+  --color-ember: #ff6b3d;
+  --color-mint: #3ddc97;
+  --color-rose-alert: #ff5d73;
+  --color-sky-soft: #59c2ff;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  background-color: var(--color-ink-950);
+  color: var(--color-mist-100);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Ambient layered backdrop: soft radial washes + fine grid + noise */
+.app-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      900px 520px at 88% -8%,
+      rgba(247, 183, 51, 0.13),
+      transparent 62%
+    ),
+    radial-gradient(
+      760px 480px at 4% 8%,
+      rgba(255, 107, 61, 0.11),
+      transparent 60%
+    ),
+    radial-gradient(
+      1100px 700px at 50% 118%,
+      rgba(61, 220, 151, 0.08),
+      transparent 65%
+    ),
+    linear-gradient(180deg, #080a11 0%, #0b0d15 45%, #07080d 100%);
+}
+
+.app-grid-lines {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.5;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.028) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.028) 1px, transparent 1px);
+  background-size: 68px 68px;
+  mask-image: radial-gradient(
+    ellipse 90% 70% at 50% 20%,
+    #000 20%,
+    transparent 78%
+  );
+}
+
+.panel {
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.035),
+      rgba(255, 255, 255, 0.008)
+    ),
+    var(--color-ink-900);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.04) inset,
+    0 22px 48px -28px rgba(0, 0, 0, 0.9);
+}
+
+.panel-flat {
+  background: var(--color-ink-850);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.hairline {
+  border-color: rgba(255, 255, 255, 0.07);
+}
+
+.tabular {
+  font-variant-numeric: tabular-nums;
+  font-family: var(--font-mono);
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.02);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.11);
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(247, 183, 51, 0.4);
+  background-clip: content-box;
+}
+
+@keyframes shimmer-sweep {
+  0% {
+    transform: translateX(-120%);
+  }
+  100% {
+    transform: translateX(220%);
+  }
+}
+.shimmer::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.22),
+    transparent
+  );
+  animation: shimmer-sweep 1.6s ease-in-out infinite;
+}
+
+@keyframes pulse-ring {
+  0% {
+    box-shadow: 0 0 0 0 rgba(247, 183, 51, 0.45);
+  }
+  70% {
+    box-shadow: 0 0 0 9px rgba(247, 183, 51, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(247, 183, 51, 0);
+  }
+}
+.pulse-ring {
+  animation: pulse-ring 1.9s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.rise-in {
+  animation: rise-in 0.36s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes slide-in-left {
+  from {
+    opacity: 0;
+    transform: translateX(-18px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.slide-in {
+  animation: slide-in-left 0.3s ease-out both;
+}
+
+@keyframes spin-slow {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.spin-slow {
+  animation: spin-slow 1.1s linear infinite;
+}
+
+.focus-ring:focus-visible {
+  outline: 2px solid rgba(247, 183, 51, 0.75);
+  outline-offset: 2px;
+}
